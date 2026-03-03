@@ -1,7 +1,7 @@
 // ===============================
 // PASSWORD PROTECTION
 // ===============================
-const CORRECT_PASSWORD = "1329";
+const CORRECT_PASSWORD = "2913";
 
 function checkPassword() {
   const input = document.getElementById("passwordInput");
