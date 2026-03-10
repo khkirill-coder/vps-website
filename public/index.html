@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🦅 Aktron VPN — Secure Access</title>
+  <meta name="description" content="Premium VPN Service with secure VLESS/Reality connections">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="manifest" href="manifest.json?v=2">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+  <link rel="icon" type="image/png" href="icon-192.png?v=2">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Aktron VPN">
+  <meta name="theme-color" content="#000000" id="theme-color-meta">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- =============== SPLASH SCREEN =============== -->
+  <div id="splashScreen" class="splash-screen">
+    <img src="bird-logo.png" alt="Logo" class="splash-logo">
+  </div>
+
+  <div class="glow-overlay"></div>
+  <div class="vignette"></div>
+  <div class="liquid-blob"></div>
+
+  <div class="top-controls">
+    <button class="theme-btn" id="btn-theme" onclick="toggleTheme()">☀️</button>
+    <div class="lang-switch">
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">RU</button>
+    </div>
+  </div>
+
+  <!-- =============== SINGLE LOGIN SCREEN =============== -->
+  <div id="loginScreen" class="auth-wrapper">
+    <div class="auth-card glass-effect iri-border">
+      <img src="bird-logo.png" alt="Aktron VPN" class="app-logo">
+      <h1 id="auth-title">Вход в систему</h1>
+      <p id="auth-desc" class="auth-desc-text">Введите ваш ключ доступа</p>
+      <form id="loginForm" class="auth-form" style="position: relative; z-index: 20;">
+        <input type="text" id="passwordInput" placeholder="Ваш ключ доступа" autocomplete="off" required autofocus>
+        <button type="submit" class="btn-action" id="auth-btn">Продолжить</button>
+      </form>
+      <p id="errorMsg" class="error-text" style="display: none;">Ключ недействителен или исчерпан.</p>
+    </div>
+  </div>
+
+  <!-- =============== USER VPN DASHBOARD =============== -->
+  <div id="userContent" class="app-container" style="display: none;">
+    <header class="app-header">
+      <div class="header-content">
+        <div class="user-badge glass-effect" id="user-badge"></div>
+        <img src="bird-logo.png" alt="Aktron VPN" class="header-logo">
+        <div class="tag" id="header-tag">Защищенное соединение</div>
+        <h1 id="header-title">Серверы VPN</h1>
+        <p id="header-desc">Выберите сервер для подключения. Все узлы используют Reality/VLESS шифрование.</p>
+      </div>
+    </header>
+
+    <div class="node-grid" id="vpn-nodes-grid">
+      <!-- Nodes rendered dynamically -->
+    </div>
+
+    <section class="subscription-panel glass-effect iri-border" id="subscription-section" style="display: none;">
+      <div class="panel-content">
+        <h2 id="sub-title">📡 Общая подписка</h2>
+        <p id="sub-desc">Подписка автоматически обновляет список серверов в вашем VPN-приложении.</p>
+        <div class="panel-actions">
+          <button class="btn-highlight" id="btn-copy-sub" onclick="copySubscription()">📋 Скопировать ссылку</button>
+          <button class="btn-secondary" id="btn-open-sub" onclick="openSubscription()">🌐 В браузере</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      <div class="footer-links">
+        <a href="https://t.me/HackTorvalds" id="link-support" target="_blank">Поддержка</a>
+        <a href="https://t.me/fentasota" id="link-community" target="_blank">Сообщество</a>
+        <button class="logout-link" id="btn-logout" onclick="userLogout()">Выйти</button>
+      </div>
+      <p id="footer-copy">© 2026 VPN Service. Разработка: HackTorvalds.</p>
+    </footer>
+  </div>
+
+  <!-- =============== ADMIN PANEL =============== -->
+  <div id="adminContent" class="app-container" style="display: none;"></div>
+
+  <!-- Tutorial Modal -->
+  <div id="tutorialModal" class="tutorial-modal" style="display: none;">
+    <div class="tutorial-backdrop" onclick="closeTutorial()"></div>
+    <div class="tutorial-content glass-effect">
+      <button class="tutorial-close" onclick="closeTutorial()">✕</button>
+      <div class="tutorial-icon">📲</div>
+      <h3 class="tutorial-title">Как подключиться?</h3>
+      <p class="tutorial-desc">Ваша ссылка уже скопирована! Следуйте инструкции ниже, чтобы настроить VPN.</p>
+      <div class="tutorial-steps">
+        <div class="t-step">
+          <span class="t-num">1</span>
+          <p>Скачайте <strong>Streisand</strong> из App Store или Play Market.</p>
+        </div>
+        <div class="t-step">
+          <span class="t-num">2</span>
+          <p>Откройте приложение и нажмите на <strong>плюс (+)</strong> в правом верхнем углу.</p>
+        </div>
+        <div class="t-step">
+          <span class="t-num">3</span>
+          <p>Выберите <strong>«Добавить из буфера»</strong> (или Import from Clipboard).</p>
+        </div>
+        <div class="t-step">
+          <span class="t-num">4</span>
+          <p>Нажмите большую кнопку подключения! 🚀</p>
+        </div>
+      </div>
+      <button class="btn-action tutorial-btn" onclick="openStreisandApp()">Открыть Streisand</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+{
+    "name": "vpn-dashboard",
+    "version": "1.0.0",
+    "description": "VPN Key Management Dashboard",
+    "scripts": {
+        "deploy": "npx netlify-cli deploy --prod --dir=public --functions=netlify/functions"
+    },
+    "dependencies": {
+        "@netlify/blobs": "^8.1.0"
+    }
+}
